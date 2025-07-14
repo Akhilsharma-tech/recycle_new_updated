@@ -2,8 +2,7 @@
 using System.Threading;
 using ElectronicRecyclers.One800Recycling.Application.Import.Operations;
 
-using ElectronicRecyclers.One800Recycling.Web.Infrastructure.Hubs;
-using ElectronicRecyclers.One800Recycling.Web.Infrastructure.Logging;
+
 using Microsoft.AspNet.SignalR;
 
 

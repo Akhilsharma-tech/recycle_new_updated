@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using ElectronicRecyclers.One800Recycling.Domain.ServiceObjects;
 using ElectronicRecyclers.One800Recycling.Application.Import.Operations;
-
-
-using ElectronicRecyclers.One800Recycling.Web.Models.ServiceObjects;
-
+using ElectronicRecyclers.One800Recycling.Domain.Common;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
 {

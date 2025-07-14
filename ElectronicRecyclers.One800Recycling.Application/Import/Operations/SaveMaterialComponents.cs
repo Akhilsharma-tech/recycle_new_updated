@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-
+using ElectronicRecyclers.One800Recycling.Domain.Entities;
+using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
 using NHibernate;
 
 
@@ -14,7 +15,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.session = session;
         }
 
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
         {
             using(session)
             using (var transaction = session.BeginTransaction())

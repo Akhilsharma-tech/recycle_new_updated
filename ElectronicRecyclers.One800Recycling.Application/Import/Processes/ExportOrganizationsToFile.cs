@@ -1,5 +1,7 @@
 ﻿
 using ElectronicRecyclers.One800Recycling.Application.Import.Operations;
+using ElectronicRecyclers.One800Recycling.Domain.Entities;
+using ElectronicRecyclers.One800Recycling.Web.ViewModels;
 
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes

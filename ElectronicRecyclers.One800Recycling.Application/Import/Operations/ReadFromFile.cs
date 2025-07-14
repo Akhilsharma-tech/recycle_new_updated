@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using System.Collections.Generic;
 using System.IO;
 
 
@@ -14,13 +15,13 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.stream = stream;
         } 
 
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             using (var file = FluentImportFile.For<T>().From(stream))
             {
                 foreach (var obj in file)
                 {
-                    yield return Row.FromObject(obj);
+                    yield return DynamicReader.FromObject(obj);
                 }
             }
         }

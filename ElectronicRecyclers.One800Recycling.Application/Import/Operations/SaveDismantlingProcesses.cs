@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Domain.Entities;
+using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
 using NHibernate;
 
 
@@ -17,7 +19,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.session = session;
         }
 
-        private static EnvironmentalImpact GetEnvironmentalImpact(Row row)
+        private static EnvironmentalImpact GetEnvironmentalImpact(DynamicReader row)
         {
             var climateImpactStr = row["ClimateChangeImpact"].ToString();
             var resourceImpactStr = row["ResourceDepletionImpact"].ToString();
@@ -37,7 +39,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             return new EnvironmentalImpact(climateImpact, resourceImpact, waterImpact);
         }
 
-        private static decimal ParseLossPercentage(Row row)
+        private static decimal ParseLossPercentage(DynamicReader row)
         {
             var loss = row["LossPercentageDuringRecycling"];
             double result;
@@ -47,7 +49,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             return 0M;
         }
 
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             using (session)
             using (var transaction = session.BeginTransaction())

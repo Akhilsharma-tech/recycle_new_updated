@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 
@@ -17,7 +18,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.validationColumn = validationColumn;
         }
 
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             foreach (var row in rows)
             {

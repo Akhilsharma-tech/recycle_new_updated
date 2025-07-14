@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ElectronicRecyclers.One800Recycling.Application.Common;
 using ElectronicRecyclers.One800Recycling.Application.Import.Records;
 
 
@@ -15,7 +16,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.filePath = filePath;
         }
 
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             var engine = FluentFile.For<MaterialEnvironmentalImpactRecord>();
             engine.HeaderText = "Material Name" +

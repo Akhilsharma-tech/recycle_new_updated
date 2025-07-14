@@ -18,7 +18,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.filePath = filePath;
         }
 
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
         {
             var engine = FluentFile.For<OrganizationMaterialsRecord>();
             engine.HeaderText = "OrganizationId\tMaterialId\tMaterialName\tMaterialBusinessDeliveryOption\tMaterialResidentialDeliveryOption";

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using System.Collections.Generic;
 
 
 
@@ -7,7 +8,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
     public class ValidateHoursOfOperation 
     {
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
         {
             const string validationColumn = "IsHoursOfOperationValid";
             

@@ -15,7 +15,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.value = value;
         }
 
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
         {
             foreach (var row in rows)
             {

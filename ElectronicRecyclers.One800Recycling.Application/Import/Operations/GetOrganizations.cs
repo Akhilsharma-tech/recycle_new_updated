@@ -1,18 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
-
 using NHibernate;
 using NHibernate.Criterion;
-
-
-
-using ElectronicRecyclers.One800Recycling.Web.Areas.Admin.Helpers;
 using System;
 using ElectronicRecyclers.One800Recycling.Domain.Common;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using ElectronicRecyclers.One800Recycling.Web.ViewModels;
+using ElectronicRecyclers.One800Recycling.Application.Common;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
@@ -110,13 +105,13 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 
         }
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             using (var session = NHSessionProvider.OpenSession())
             {
                 foreach (var organization in GetEnvironmentalOrganizations(session))
                 {
-                    var row = Row.FromObject(organization);
+                    var row = DynamicReader.FromObject(organization);
 
                     if (organization is EnvironmentalOrganization envOrg)
                     {

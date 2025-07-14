@@ -2,9 +2,8 @@
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
-
-
 using NHibernate;
+using ElectronicRecyclers.One800Recycling.Domain.Entities;
 
 
 
@@ -28,7 +27,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
                 .ForEach(action);
         }
 
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
         {
             using (session)
             using (var transaction = session.BeginTransaction())

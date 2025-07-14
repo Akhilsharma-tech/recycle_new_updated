@@ -1,16 +1,16 @@
-﻿using System;
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Domain.Common;
+using ElectronicRecyclers.One800Recycling.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
-
-
 
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
     public class ValidateMaterial 
     {
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             var dbMaterialNames = NHSessionProvider.OpenStatelessSession()
                 .QueryOver<Material>()

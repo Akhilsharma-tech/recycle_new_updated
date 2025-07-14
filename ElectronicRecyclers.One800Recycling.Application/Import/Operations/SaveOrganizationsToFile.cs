@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-
-
-
-
 using ElectronicRecyclers.One800Recycling.Application.Import.Records;
 using System;
+using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
@@ -26,7 +23,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             return phone.Number.ToString();
         }
 
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
         {
             var engine = FluentFile.For<EnvironmentalOrganizationUpdateRecord>();
             engine.HeaderText = "Id\tName\tDescription\tAddressLine1\tAddressLine2\tCity\tRegion\tState\t";

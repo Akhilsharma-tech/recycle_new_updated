@@ -1,9 +1,7 @@
-﻿using Common.Logging;
+﻿using ElectronicRecyclers.One800Recycling.Domain.Common;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using NHibernate;
 using NHibernate.Linq;
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +12,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
     public class SaveOrganizationMaterials<T>  where T : EnvironmentalOrganization
     {
 
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
         {
             ISession session;
             ITransaction transaction;

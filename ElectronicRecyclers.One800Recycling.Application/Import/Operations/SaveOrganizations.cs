@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-
-using ElectronicRecyclers.One800Recycling.Web.Infrastructure.Logging;
+using ElectronicRecyclers.One800Recycling.Application.Logging;
 using NHibernate;
-
-
-
 using NHibernate.Linq;
 using static System.Collections.Specialized.BitVector32;
 using System.Text.RegularExpressions;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
-using ElectronicRecyclers.One800Recycling.Application.Logging;
 using ElectronicRecyclers.One800Recycling.Domain.Common;
 using ElectronicRecyclers.One800Recycling.Domain.Exceptions;
 using ElectronicRecyclers.One800Recycling.Application.Common;
@@ -24,7 +18,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
     {
        
 
-        private static void AddNotes(EnvironmentalOrganization organization, Row row)
+        private static void AddNotes(EnvironmentalOrganization organization, DynamicReader row)
         {
             try
             {
@@ -77,7 +71,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
         }
 
 
-        private static void AddHoursOfOperation(EnvironmentalOrganization organization, Row row)
+        private static void AddHoursOfOperation(EnvironmentalOrganization organization, DynamicReader row)
         {
 
             ISession session;
@@ -182,7 +176,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
                 m.Value.Item2));
         }
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             LogManager.GetLogger().Info("Begin saving organizations into the active list");
 

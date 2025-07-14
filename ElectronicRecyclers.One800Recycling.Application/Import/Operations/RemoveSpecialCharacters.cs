@@ -13,7 +13,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.column = column;
         }
 
-        public override IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
         {
             foreach (var row in rows)
             {
