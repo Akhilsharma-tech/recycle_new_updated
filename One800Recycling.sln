@@ -1,0 +1,91 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.Web", "ElectronicRecyclers.One800Recycling.Web\ElectronicRecyclers.One800Recycling.Web.csproj", "{14E769A8-B48D-4686-8450-7C5B3A2577C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.WebApi", "ElectronicRecyclers.One800Recycling.WebApi\ElectronicRecyclers.One800Recycling.WebApi.csproj", "{DB6559D1-5F58-48D1-9491-6D52576CB032}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.JobScheduler", "ElectronicRecyclers.One800Recycling.JobScheduler\ElectronicRecyclers.One800Recycling.JobScheduler.csproj", "{CB110D8E-AD05-48CE-912D-AEC70A0C6EB3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.Azure", "ElectronicRecyclers.One800Recycling.Azure\ElectronicRecyclers.One800Recycling.Azure.csproj", "{ACFF4DDC-13DB-4603-93CF-3C7C13DAA8F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.LegacyApi", "ElectronicRecyclers.One800Recycling.LegacyApi\ElectronicRecyclers.One800Recycling.LegacyApi.csproj", "{C9BCFF89-A18C-41E9-910A-E39B0B5D585E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.UnitTests", "ElectronicRecyclers.One800Recycling.UnitTests\ElectronicRecyclers.One800Recycling.UnitTests.csproj", "{BB5735A6-181E-4A58-B01F-AACBDA84B3BB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.IntegrationTests", "ElectronicRecyclers.One800Recycling.IntegrationTests\ElectronicRecyclers.One800Recycling.IntegrationTests.csproj", "{22863720-0988-4BC0-AEA1-D12D7009800D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.DbSchemaManager", "ElectronicRecyclers.One800Recycling.DbSchemaManager\ElectronicRecyclers.One800Recycling.DbSchemaManager.csproj", "{B45E82DA-E3B5-4F9B-B1C3-FDB339022F9A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.ImportFromLegacyDb", "ElectronicRecyclers.One800Recycling.ImportFromLegacyDb\ElectronicRecyclers.One800Recycling.ImportFromLegacyDb.csproj", "{A91ED85C-8AE7-4614-A9C8-DBF4A82A0900}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.Domain", "ElectronicRecyclers.One800Recycling.Domain\ElectronicRecyclers.One800Recycling.Domain.csproj", "{0658CC4A-8502-463F-A466-D66580884BDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.Application", "ElectronicRecyclers.One800Recycling.Application\ElectronicRecyclers.One800Recycling.Application.csproj", "{FB2D7E5F-46F7-40EA-96A3-4356B4952F7C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicRecyclers.One800Recycling.Infrastructure", "ElectronicRecyclers.One800Recycling.Infrastructure\ElectronicRecyclers.One800Recycling.Infrastructure.csproj", "{4F2784A0-1BB3-4BA1-B856-2E9C03396203}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14E769A8-B48D-4686-8450-7C5B3A2577C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14E769A8-B48D-4686-8450-7C5B3A2577C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14E769A8-B48D-4686-8450-7C5B3A2577C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14E769A8-B48D-4686-8450-7C5B3A2577C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB6559D1-5F58-48D1-9491-6D52576CB032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB6559D1-5F58-48D1-9491-6D52576CB032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB6559D1-5F58-48D1-9491-6D52576CB032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB6559D1-5F58-48D1-9491-6D52576CB032}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB110D8E-AD05-48CE-912D-AEC70A0C6EB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB110D8E-AD05-48CE-912D-AEC70A0C6EB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB110D8E-AD05-48CE-912D-AEC70A0C6EB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB110D8E-AD05-48CE-912D-AEC70A0C6EB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACFF4DDC-13DB-4603-93CF-3C7C13DAA8F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACFF4DDC-13DB-4603-93CF-3C7C13DAA8F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACFF4DDC-13DB-4603-93CF-3C7C13DAA8F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACFF4DDC-13DB-4603-93CF-3C7C13DAA8F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9BCFF89-A18C-41E9-910A-E39B0B5D585E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9BCFF89-A18C-41E9-910A-E39B0B5D585E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9BCFF89-A18C-41E9-910A-E39B0B5D585E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9BCFF89-A18C-41E9-910A-E39B0B5D585E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB5735A6-181E-4A58-B01F-AACBDA84B3BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB5735A6-181E-4A58-B01F-AACBDA84B3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB5735A6-181E-4A58-B01F-AACBDA84B3BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB5735A6-181E-4A58-B01F-AACBDA84B3BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22863720-0988-4BC0-AEA1-D12D7009800D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22863720-0988-4BC0-AEA1-D12D7009800D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22863720-0988-4BC0-AEA1-D12D7009800D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22863720-0988-4BC0-AEA1-D12D7009800D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B45E82DA-E3B5-4F9B-B1C3-FDB339022F9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B45E82DA-E3B5-4F9B-B1C3-FDB339022F9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B45E82DA-E3B5-4F9B-B1C3-FDB339022F9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B45E82DA-E3B5-4F9B-B1C3-FDB339022F9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A91ED85C-8AE7-4614-A9C8-DBF4A82A0900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A91ED85C-8AE7-4614-A9C8-DBF4A82A0900}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A91ED85C-8AE7-4614-A9C8-DBF4A82A0900}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A91ED85C-8AE7-4614-A9C8-DBF4A82A0900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0658CC4A-8502-463F-A466-D66580884BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0658CC4A-8502-463F-A466-D66580884BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0658CC4A-8502-463F-A466-D66580884BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0658CC4A-8502-463F-A466-D66580884BDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB2D7E5F-46F7-40EA-96A3-4356B4952F7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB2D7E5F-46F7-40EA-96A3-4356B4952F7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB2D7E5F-46F7-40EA-96A3-4356B4952F7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB2D7E5F-46F7-40EA-96A3-4356B4952F7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F2784A0-1BB3-4BA1-B856-2E9C03396203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F2784A0-1BB3-4BA1-B856-2E9C03396203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F2784A0-1BB3-4BA1-B856-2E9C03396203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F2784A0-1BB3-4BA1-B856-2E9C03396203}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {04C92174-0C28-4584-87E2-2F38D49F7457}
+	EndGlobalSection
+EndGlobal

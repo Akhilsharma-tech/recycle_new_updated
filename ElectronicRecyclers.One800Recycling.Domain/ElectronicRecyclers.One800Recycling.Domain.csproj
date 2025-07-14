@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Entities\" />
+    <Folder Include="Helper\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="libphonenumber-csharp" Version="9.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.3.0" />
+    <PackageReference Include="NHibernate" Version="5.5.2" />
+  </ItemGroup>
+
+</Project>

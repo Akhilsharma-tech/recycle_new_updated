@@ -1,0 +1,6 @@
+@ElectronicRecyclers.One800Recycling.WebApi_HostAddress = http://localhost:5227
+
+GET {{ElectronicRecyclers.One800Recycling.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

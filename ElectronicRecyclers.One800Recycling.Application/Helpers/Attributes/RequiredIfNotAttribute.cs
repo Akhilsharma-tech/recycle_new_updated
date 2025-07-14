@@ -1,0 +1,38 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+
+namespace ElectronicRecyclers.One800Recycling.Application.Helpers.Attributes
+{
+    public class RequiredIfNotAttribute : BaseRequiredAttribute
+    {
+        public RequiredIfNotAttribute(string dependentProperty, object targetValue)
+            : base(dependentProperty, targetValue) { }
+
+        protected override string ValidationType
+        {
+            get { return "requiredifnot"; }
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var field = validationContext
+                .ObjectInstance
+                .GetType()
+                .GetProperty(DependentProperty);
+
+            if (field != null)
+            {
+                var dependentValue = field.GetValue(validationContext.ObjectInstance, null);
+
+                if ((dependentValue == null && TargetValue == null) ||
+                    (dependentValue != null && dependentValue.Equals(TargetValue) == false))
+                {
+                    if (requiredAttribute.IsValid(value) == false)
+                        return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
+                }
+            }
+
+            return ValidationResult.Success;
+        }
+    }
+}
