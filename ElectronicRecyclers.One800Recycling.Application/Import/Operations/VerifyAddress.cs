@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ElectronicRecyclers.One800Recycling.Application.Common;
 using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
-using ElectronicRecyclers.One800Recycling.Web.Services;
 
 
 
@@ -10,10 +10,10 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
     public class VerifyAddress 
     {
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             var addresses = new Dictionary<int, Address>();
-            var resultRows = new Dictionary<int, Row>();
+            var resultRows = new Dictionary<int, DynamicReader>();
             const string validationColumn = "IsAddressValid";
             var key = 1;
 
@@ -42,7 +42,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
                 {
                     int rowKey = kvp.Key;
                     Address originalAddress = kvp.Value;
-                    Row row = resultRows[rowKey];
+                    DynamicReader row = resultRows[rowKey];
 
                     Address verifiedAddress = null;
 

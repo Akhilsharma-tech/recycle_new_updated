@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ElectronicRecyclers.One800Recycling.Domain\ElectronicRecyclers.One800Recycling.Domain.csproj" />
+    <ProjectReference Include="..\ElectronicRecyclers.One800Recycling.Infrastructure\ElectronicRecyclers.One800Recycling.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

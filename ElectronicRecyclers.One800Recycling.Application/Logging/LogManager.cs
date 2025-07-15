@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Logging
 {
+
     public class LogManager
     {
         public static ILog GetLogger()
@@ -14,5 +15,6 @@ namespace ElectronicRecyclers.One800Recycling.Application.Logging
             var stackFrame = new StackFrame(1, false);
             return new NLogLogger(stackFrame.GetMethod().DeclaringType);
         }
+
     }
 }

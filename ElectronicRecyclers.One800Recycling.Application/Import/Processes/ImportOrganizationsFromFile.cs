@@ -2,11 +2,8 @@
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using ElectronicRecyclers.One800Recycling.Application.Import.Operations;
 using ElectronicRecyclers.One800Recycling.Application.Import.Records;
-
-
-
-
-
+using Microsoft.AspNetCore.Http;
+using ElectronicRecyclers.One800Recycling.Domain.Common;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
 {
@@ -15,7 +12,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
     {
         private readonly string importName;
 
-        public ImportOrganizationsFromFile(string importName, HttpPostedFileBase file) 
+        public ImportOrganizationsFromFile(string importName, IFormFile file) 
             : base(file)
         {
             this.importName = importName;

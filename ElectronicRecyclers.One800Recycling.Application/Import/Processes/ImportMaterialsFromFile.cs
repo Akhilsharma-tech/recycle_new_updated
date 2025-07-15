@@ -1,19 +1,22 @@
-﻿using System.Web;
+﻿using System;
+using Microsoft.AspNetCore.Http;
+using NHibernate;
+using NHibernate.Criterion;
 using ElectronicRecyclers.One800Recycling.Application.Import.Operations;
 using ElectronicRecyclers.One800Recycling.Application.Import.Records;
-
-
-using NHibernate;
+using ElectronicRecyclers.One800Recycling.Domain.Entities;
+using ElectronicRecyclers.One800Recycling.Domain.Common;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
 {
     public class ImportMaterialsFromFile : BaseImportProcess
     {
-        public ImportMaterialsFromFile(HttpPostedFileBase file)
+        private readonly NHibernate.ISession session;
+
+        public ImportMaterialsFromFile(IFormFile file)
             : this(file, NHSessionProvider.CurrentSession) { }
 
-        private readonly ISession session;
-        public ImportMaterialsFromFile(HttpPostedFileBase file, ISession session) 
+        public ImportMaterialsFromFile(IFormFile file, NHibernate.ISession session)
             : base(file)
         {
             this.session = session;

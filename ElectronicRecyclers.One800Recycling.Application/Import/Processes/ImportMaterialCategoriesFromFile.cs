@@ -3,6 +3,7 @@ using ElectronicRecyclers.One800Recycling.Application.Import.Operations;
 using ElectronicRecyclers.One800Recycling.Application.Import.Records;
 using ElectronicRecyclers.One800Recycling.Domain.Common;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 
 
@@ -10,7 +11,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
 {
     public class ImportMaterialCategoriesFromFile : BaseImportProcess
     {
-        public ImportMaterialCategoriesFromFile(HttpPostedFileBase file) : base(file)
+        public ImportMaterialCategoriesFromFile(IFormFile file) : base(file)
         {
         }
 

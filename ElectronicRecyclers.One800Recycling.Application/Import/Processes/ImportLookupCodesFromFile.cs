@@ -3,6 +3,7 @@ using ElectronicRecyclers.One800Recycling.Application.Import.Operations;
 using ElectronicRecyclers.One800Recycling.Application.Import.Records;
 using ElectronicRecyclers.One800Recycling.Domain.Common;
 using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
+using Microsoft.AspNetCore.Http;
 
 
 
@@ -10,7 +11,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
 {
     public class ImportLookupCodeFromFile<T> : BaseImportProcess where T : LookupCode
     {
-        public ImportLookupCodeFromFile(HttpPostedFileBase file) : base(file)
+        public ImportLookupCodeFromFile(IFormFile file) : base(file)
         {
         }
 

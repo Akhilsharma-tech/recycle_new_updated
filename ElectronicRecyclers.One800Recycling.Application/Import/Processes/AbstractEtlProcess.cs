@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Threading;
+using ElectronicRecyclers.One800Recycling.Application.Common;
 using ElectronicRecyclers.One800Recycling.Application.Import.Operations;
+using ElectronicRecyclers.One800Recycling.Application.Logging;
+using ElectronicRecyclers.One800Recycling.Infrastructure.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.CodeAnalysis;
 
-
-using Microsoft.AspNet.SignalR;
 
 
 
@@ -34,28 +38,28 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
             return Math.Round(progress, 2);
         }
 
-        private void ReportProgress(IOperation op, Row dictionary)
+        private void ReportProgress(IOperation op, DynamicReader dictionary)
         {
             var rowsCount = 0;
             if (dictionary.Contains(RowsCountKey) && dictionary[RowsCountKey] != null)
-                rowsCount = (int) dictionary[RowsCountKey];
+                rowsCount = (int)dictionary[RowsCountKey];
 
             var current = op.Statistics.OutputtedRows;
             var progress = CalculateProgress(current, rowsCount);
-            
+
             Progress.Report(progress);
             Thread.Sleep(300); //Give time for ui to update progress bar. -Roman
         }
 
-        protected IProgress<double> Progress { get; private set; } 
+        protected IProgress<double> Progress { get; private set; }
 
         protected override void PostProcessing()
         {
             GetAllErrors().ForEach(e =>
             {
                 hubContext.Clients.All.broadcastError(e.Message);
-                LogManager.GetLogger().Error(e.Message, e); 
-            }); 
+                LogManager.GetLogger().Error(e.Message, e);
+            });
         }
 
         protected void RegisterWithProgressReporting(IOperation op)
