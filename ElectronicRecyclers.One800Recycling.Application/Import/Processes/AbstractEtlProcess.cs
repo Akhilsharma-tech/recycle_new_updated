@@ -1,77 +1,89 @@
-﻿using System;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using System.Threading;
-using ElectronicRecyclers.One800Recycling.Application.Common;
-using ElectronicRecyclers.One800Recycling.Application.Import.Operations;
-using ElectronicRecyclers.One800Recycling.Application.Logging;
-using ElectronicRecyclers.One800Recycling.Infrastructure.Hubs;
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess.IOperationETL;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.CodeAnalysis;
-
-
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
 {
-    public abstract class AbstractEtlProcess : EtlProcess
+    public abstract class AbstractEtlProcess
     {
-        private IHubContext hubContext;
-        private IOperation operationWithProgressReporting;
+        private readonly List<IOperationETL> operations = new();
+        private IHubContext<ProgressBarHub> hubContext;
+        private IOperationETL operationWithProgressReporting;
         private const string RowsCountKey = "%rowsCount%";
-        private static void PauseTaskForJustAMomentToLetUserInterfaceToLoad()
-        {
-            Thread.Sleep(4000);//It is done for task progress reporting to the ui. -Roman
-        }
-
-        protected override void Initialize()
-        {
-            PauseTaskForJustAMomentToLetUserInterfaceToLoad();
-
-            hubContext = GlobalHost.ConnectionManager.GetHubContext<ProgressBarHub>();
-            Progress = new Progress<double>(percent => hubContext.Clients.All.broadcastProgress(percent));
-            Progress.Report(0); //Show the progress bar to the user
-        }
-
-        private static double CalculateProgress(long current, int total)
-        {
-            var progress = (current >= total) ? 100.00 : ((double)current / (double)total) * 100;
-            return Math.Round(progress, 2);
-        }
-
-        private void ReportProgress(IOperation op, DynamicReader dictionary)
-        {
-            var rowsCount = 0;
-            if (dictionary.Contains(RowsCountKey) && dictionary[RowsCountKey] != null)
-                rowsCount = (int)dictionary[RowsCountKey];
-
-            var current = op.Statistics.OutputtedRows;
-            var progress = CalculateProgress(current, rowsCount);
-
-            Progress.Report(progress);
-            Thread.Sleep(300); //Give time for ui to update progress bar. -Roman
-        }
-
         protected IProgress<double> Progress { get; private set; }
 
-        protected override void PostProcessing()
+        protected AbstractEtlProcess(IHubContext<ProgressBarHub> hubContext)
         {
-            GetAllErrors().ForEach(e =>
-            {
-                hubContext.Clients.All.broadcastError(e.Message);
-                LogManager.GetLogger().Error(e.Message, e);
-            });
+            this.hubContext = hubContext;
         }
 
-        protected void RegisterWithProgressReporting(IOperation op)
+        public async Task ExecuteAsync(IEnumerable<DynamicReader> input)
+        {
+            Initialize();
+            var result = await RunOperationsAsync(input);
+            PostProcessing(result);
+        }
+
+        protected virtual void Initialize()
+        {
+            Progress = new Progress<double>(percent =>
+            {
+                hubContext.Clients.All.SendAsync("broadcastProgress", percent);
+            });
+            Progress.Report(0);
+            Thread.Sleep(1000); // Optional delay
+        }
+
+        private async Task<IEnumerable<DynamicReader>> RunOperationsAsync(IEnumerable<DynamicReader> input)
+        {
+            var result = input;
+            foreach (var op in GetOperations())
+            {
+                if (op == operationWithProgressReporting)
+                    op.OnRowProcessed += row => ReportProgress(op, row); 
+
+                result = await op.ExecuteAsync(result);
+            }
+            return result;
+        }
+
+        private void ReportProgress(IOperationETL op, Dictionary<string, object> row)
+        {
+            if (!row.TryGetValue(RowsCountKey, out var totalObj) || totalObj is not int totalRows)
+                return;
+
+            var current = 1; // Replace with actual tracking logic if needed
+            var progress = Math.Round((double)current / totalRows * 100, 2);
+            Progress.Report(progress);
+        }
+
+        protected virtual void PostProcessing(IEnumerable<Dictionary<string, object>> result)
+        {
+
+        }
+
+       
+        protected void Register(IOperationETL op)
+        {
+            operations.Add(op);
+        }
+
+        
+        protected void RegisterWithProgressReporting(IOperationETL op)
         {
             if (operationWithProgressReporting != null)
-                throw new Exception("Only one operation per etl process allowed to have progress reporting capability.");
+                throw new Exception("Only one operation per ETL process allowed for progress reporting");
 
             operationWithProgressReporting = op;
-            operationWithProgressReporting.OnRowProcessed += ReportProgress;
-
-            Register(new CountRows());
-            Register(operationWithProgressReporting);
+            Register(op);
         }
+
+        protected virtual IEnumerable<IOperationETL> GetOperations() => operations;
     }
+
 }
