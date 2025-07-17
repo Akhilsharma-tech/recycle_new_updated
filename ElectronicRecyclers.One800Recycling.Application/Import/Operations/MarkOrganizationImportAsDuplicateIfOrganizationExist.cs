@@ -1,4 +1,5 @@
 ﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using ElectronicRecyclers.One800Recycling.Domain.Common;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ using System.Collections.Generic;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class MarkOrganizationImportAsDuplicateIfOrganizationExist 
+    public class MarkOrganizationImportAsDuplicateIfOrganizationExist : AbstractOperation
     {
-        public IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             using (var session = NHSessionProvider.OpenStatelessSession())
             using (var transaction = session.BeginTransaction())

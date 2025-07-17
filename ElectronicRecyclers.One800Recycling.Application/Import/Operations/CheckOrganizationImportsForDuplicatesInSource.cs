@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using System.Collections.Generic;
 using System.Linq;
 
 
@@ -6,11 +8,11 @@ using System.Linq;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class CheckOrganizationImportsForDuplicatesInSource 
+    public class CheckOrganizationImportsForDuplicatesInSource : AbstractOperation
     {
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
-            var results = new List<Dictionary<string, object>>();
+            var results = new List<DynamicReader>();
 
             var duplicates = rows
                 .GroupBy(r => new { Name = r["Name"], Address = r["Address"] })

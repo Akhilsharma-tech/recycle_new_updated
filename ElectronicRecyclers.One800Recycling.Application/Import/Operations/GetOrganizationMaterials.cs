@@ -1,6 +1,9 @@
 ﻿
 
 
+using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using ElectronicRecyclers.One800Recycling.Application.Import.Processes;
 using ElectronicRecyclers.One800Recycling.Domain.Common;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using ElectronicRecyclers.One800Recycling.Web.ViewModels;
@@ -16,7 +19,7 @@ using System.Web;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class GetOrganizationMaterials<TOrganization> 
+    public class GetOrganizationMaterials<TOrganization> : AbstractOperation
             where TOrganization : DomainObject
     {
         private readonly EnvironmentalOrganizationsViewModel viewModel;
@@ -102,7 +105,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             return organizations;
 
         }
-        public IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             using (var session = NHSessionProvider.OpenSession())
             {
@@ -117,7 +120,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
                             if (materialOrg.Material == null)
                                 continue;
 
-                            var row = new Dictionary<string, object>();
+                            var row = new DynamicReader();
 
                             var material = materialOrg.Material;
                             var deliveries = materialOrg.GetMaterialDeliveries();

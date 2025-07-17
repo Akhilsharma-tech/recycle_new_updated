@@ -1,4 +1,5 @@
 ﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using System.Collections.Generic;
 using System.IO;
 
@@ -6,7 +7,7 @@ using System.IO;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class ReadFromFile<T> 
+    public class ReadFromFile<T> : AbstractOperation
     {
         private readonly Stream stream;
 
@@ -15,7 +16,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.stream = stream;
         } 
 
-        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             using (var file = FluentImportFile.For<T>().From(stream))
             {

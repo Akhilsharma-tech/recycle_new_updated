@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using ElectronicRecyclers.One800Recycling.Application.Import.Records;
 using System;
+using FileHelpers;
 using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using ElectronicRecyclers.One800Recycling.Application.Common;
+using System.Text;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class SaveOrganizationsToFile 
+    public class SaveOrganizationsToFile : AbstractOperation
     {
         private readonly string filePath;
 
@@ -23,14 +27,14 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             return phone.Number.ToString();
         }
 
-        public IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
-            var engine = FluentFile.For<EnvironmentalOrganizationUpdateRecord>();
+            var engine = new FileHelperEngine<EnvironmentalOrganizationUpdateRecord>();
             engine.HeaderText = "Id\tName\tDescription\tAddressLine1\tAddressLine2\tCity\tRegion\tState\t";
             engine.HeaderText += "PostalCode\tCountry\tTelephone\tFax\tWebsiteUrl\tHoursOfOperation\tIsEnabled\tPrivateNote\tPublicNote";
-
-            using (var file = engine.To(filePath))
+            using (var file = new StreamWriter(filePath, false, Encoding.UTF8))
             {
+
                 foreach (var row in rows)
                 {
                     var record = new EnvironmentalOrganizationUpdateRecord
@@ -56,7 +60,8 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
                     record.PrivateNote = row["PrivateNote"]?.ToString();
                     record.PublicNote = row["PublicNote"]?.ToString();
 
-                    file.Write(record);
+                    string line = engine.WriteString(new[] { record });
+                    file.Write(line);
                 }
 
                 yield break;

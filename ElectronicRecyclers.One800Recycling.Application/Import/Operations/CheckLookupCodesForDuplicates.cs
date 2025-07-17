@@ -1,10 +1,12 @@
-﻿using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class CheckLookupCodesForDuplicates<T>  where T : LookupCode
+    public class CheckLookupCodesForDuplicates<T> : AbstractOperation where T : LookupCode
     {
         private readonly IEnumerable<T> lookups = new List<T>();
  
@@ -13,7 +15,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.lookups = lookups;
         }
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string, object>> rows)
+        public override  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             foreach (var row in rows)
             {

@@ -1,4 +1,6 @@
-﻿using ElectronicRecyclers.One800Recycling.Domain.Entities;
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +9,7 @@ using System.Linq;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class CheckMaterialsForDuplicates 
+    public class CheckMaterialsForDuplicates : AbstractOperation
     {
         private readonly IEnumerable<Material> materials = new List<Material>();
 
@@ -16,7 +18,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.materials = materials;
         }
  
-        public IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             foreach (var row in rows)
             {

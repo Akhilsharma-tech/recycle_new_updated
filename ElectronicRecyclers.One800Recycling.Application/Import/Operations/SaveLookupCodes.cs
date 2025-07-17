@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
 using NHibernate;
 
@@ -8,7 +10,7 @@ using NHibernate;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class SaveLookupCodes<T> 
+    public class SaveLookupCodes<T> : AbstractOperation
         where T : ILookupCode
     {
         private readonly ISession session;
@@ -17,7 +19,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.session = session;
         }
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             using (session)
             using (var transaction = session.BeginTransaction())

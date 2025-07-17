@@ -1,11 +1,12 @@
 ﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using System.Collections.Generic;
 
 
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class ValidateIfEmpty 
+    public class ValidateIfEmpty :AbstractOperation
     {
         private readonly string column;
         private readonly string validationColumn;
@@ -16,7 +17,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.validationColumn = validationColumn;
         }
 
-        public IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             foreach (var row in rows)
             {

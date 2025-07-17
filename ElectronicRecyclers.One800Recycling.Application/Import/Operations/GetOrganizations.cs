@@ -8,10 +8,12 @@ using ElectronicRecyclers.One800Recycling.Domain.Common;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using ElectronicRecyclers.One800Recycling.Web.ViewModels;
 using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using ElectronicRecyclers.One800Recycling.Application.Helpers;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class GetOrganizations<TOrganization>  
+    public class GetOrganizations<TOrganization> : AbstractOperation
         where TOrganization : DomainObject
     {
         private readonly EnvironmentalOrganizationsViewModel viewModel;
@@ -105,7 +107,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 
         }
 
-        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
+        public  override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             using (var session = NHSessionProvider.OpenSession())
             {

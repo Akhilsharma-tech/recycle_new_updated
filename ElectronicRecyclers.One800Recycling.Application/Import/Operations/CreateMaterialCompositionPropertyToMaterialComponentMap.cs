@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using NHibernate;
 
@@ -9,7 +11,7 @@ using NHibernate;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class CreateMaterialCompositionPropertyToMaterialComponentMap 
+    public class CreateMaterialCompositionPropertyToMaterialComponentMap : AbstractOperation
     {
         private readonly ISession session;
 
@@ -31,7 +33,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             return column.Trim();
         }
 
-        public IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             var materialComponents = session
                 .CreateCriteria<MaterialComponent>()
@@ -47,7 +49,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
                 var processes = new List<Tuple<ProductDismantlingProcess, string>>();
                 row["HasError"] = false;
 
-                foreach (var column in row.Columns)
+                foreach (var column in row.Keys)
                 {
                     var value = row[column];
                     if (column == "Name" 

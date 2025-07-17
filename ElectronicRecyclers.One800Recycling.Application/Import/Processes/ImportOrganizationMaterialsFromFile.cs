@@ -4,6 +4,7 @@ using ElectronicRecyclers.One800Recycling.Application.Import.Records;
 
 
 using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
 {
@@ -12,7 +13,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
     {
         private readonly string importName;
 
-        public ImportOrganizationMaterialsFromFile(string importName, HttpPostedFileBase file)
+        public ImportOrganizationMaterialsFromFile(string importName, IFormFile file)
             : base(file)
         {
             this.importName = importName;

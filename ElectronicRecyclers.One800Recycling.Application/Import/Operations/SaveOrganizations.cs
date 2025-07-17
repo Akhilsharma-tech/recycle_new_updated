@@ -10,11 +10,12 @@ using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using ElectronicRecyclers.One800Recycling.Domain.Common;
 using ElectronicRecyclers.One800Recycling.Domain.Exceptions;
 using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class SaveOrganizations<T>  where T : EnvironmentalOrganization
+    public class SaveOrganizations<T> : AbstractOperation where T : EnvironmentalOrganization
     {
        
 
@@ -176,7 +177,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
                 m.Value.Item2));
         }
 
-        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
+        public override  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             LogManager.GetLogger().Info("Begin saving organizations into the active list");
 

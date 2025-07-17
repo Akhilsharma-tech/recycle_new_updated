@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-
 using ElectronicRecyclers.One800Recycling.Application.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -39,19 +38,23 @@ namespace ElectronicRecyclers.One800Recycling.Web.Helpers.Attributes
             var controller = routeData.Values["controller"].ToString();
             var action = routeData.Values["action"].ToString();
             var key = CreateKey(controller, action);
-            var url = filterContext.HttpContext.Request.Url;
-            var tempData = filterContext.Controller.TempData;
 
-            if (string.IsNullOrEmpty(url.Query) == false && searchActions.Any(a => a == action))
+            var request = filterContext.HttpContext.Request;
+            var url = $"{request.Path}{request.QueryString}";
+            if (filterContext.Controller is Controller controllerBase)
             {
-                tempData[key] = url.PathAndQuery;
-            }
-            else
-            {
-                if (tempData.ContainsKey(key))
-                    filterContext.Result = new RedirectResult(tempData[key].ToString());
-
-                ClearTempData(tempData, controller);
+                var tempData = controllerBase.TempData;
+                if (string.IsNullOrEmpty(request.QueryString.Value) == false && searchActions.Any(a => a == action))
+                {
+                     tempData[key] = url;
+                }
+                else
+                {
+                    if (tempData.ContainsKey(key))
+                        filterContext.Result = new RedirectResult(tempData[key].ToString());
+             
+                    ClearTempData(tempData, controller);
+                }
             }
         }
 
@@ -59,21 +62,23 @@ namespace ElectronicRecyclers.One800Recycling.Web.Helpers.Attributes
         {
             base.OnActionExecuted(filterContext);
 
-            if (filterContext.IsChildAction || 
-                filterContext.HttpContext.Request.IsAuthenticated == false)
+            if (filterContext.HttpContext.User?.Identity?.IsAuthenticated == false)
                 return;
 
             var result = filterContext.Result as RedirectToRouteResult;
             if (result == null)
                 return;
-
-            var key = CreateKey(
+            if (filterContext.Controller is Controller controllerBase)
+            {
+                var key = CreateKey(
                 result.RouteValues["controller"].ToString(),
                 result.RouteValues["action"].ToString());
 
-            var tempData = filterContext.Controller.TempData;
-            if (tempData.ContainsKey(key))
-                filterContext.Result = new RedirectResult(tempData[key].ToString());
+                var tempData = controllerBase.TempData;
+                if (tempData.ContainsKey(key))
+                    filterContext.Result = new RedirectResult(tempData[key].ToString());
+            }
+
         }
     }
 }

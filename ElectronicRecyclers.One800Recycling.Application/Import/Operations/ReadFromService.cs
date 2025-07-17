@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using ElectronicRecyclers.One800Recycling.Domain.ServiceObjects;
 
 
@@ -8,7 +9,7 @@ using ElectronicRecyclers.One800Recycling.Domain.ServiceObjects;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class ReadFromService 
+    public class ReadFromService : AbstractOperation
     {
         private readonly Func<IEnumerable<IServiceEnvironmentalOrganization>> service;
 
@@ -17,7 +18,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.service = service;
         } 
 
-        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             foreach (var obj in service())
             {

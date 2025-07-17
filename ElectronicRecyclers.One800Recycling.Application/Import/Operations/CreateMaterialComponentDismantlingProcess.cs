@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
 using NHibernate;
@@ -8,7 +10,7 @@ using NHibernate;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class CreateMaterialComponentDismantlingProcess 
+    public class CreateMaterialComponentDismantlingProcess : AbstractOperation
     {
         private readonly IStatelessSession session;
         public CreateMaterialComponentDismantlingProcess(IStatelessSession session)
@@ -16,7 +18,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.session = session;
         }
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             var processes = session
                 .QueryOver<DismantlingProcess>()

@@ -1,4 +1,6 @@
-﻿using ElectronicRecyclers.One800Recycling.Domain.Common;
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using ElectronicRecyclers.One800Recycling.Domain.Common;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using NHibernate;
 using NHibernate.Linq;
@@ -9,10 +11,10 @@ using System.Web;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class SaveOrganizationMaterials<T>  where T : EnvironmentalOrganization
+    public class SaveOrganizationMaterials<T> : AbstractOperation where T : EnvironmentalOrganization
     {
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             ISession session;
             ITransaction transaction;

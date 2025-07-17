@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
 using NHibernate;
@@ -7,7 +9,7 @@ using NHibernate;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class SaveMaterialComponents 
+    public class SaveMaterialComponents : AbstractOperation
     {
         private readonly IStatelessSession session;
         public SaveMaterialComponents(IStatelessSession session)
@@ -15,7 +17,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.session = session;
         }
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             using(session)
             using (var transaction = session.BeginTransaction())

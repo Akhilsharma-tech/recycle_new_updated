@@ -1,14 +1,15 @@
 ﻿using System.Web;
 using ElectronicRecyclers.One800Recycling.Application.Import.Operations;
 using ElectronicRecyclers.One800Recycling.Application.Import.Records;
-using NHibernate;
+using Microsoft.AspNetCore.Http;
+
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
 {
     public class ImportServiceConsumersFromFile : BaseImportProcess
     {
-        private readonly ISession session;
-        public ImportServiceConsumersFromFile(HttpPostedFileBase file, ISession session) 
+        private readonly NHibernate.ISession session;
+        public ImportServiceConsumersFromFile(IFormFile file, NHibernate.ISession session) 
             : base(file)
         {
             this.session = session;

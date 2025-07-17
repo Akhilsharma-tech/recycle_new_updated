@@ -1,4 +1,5 @@
 ﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class ValidatePhone 
+    public class ValidatePhone : AbstractOperation
     {
         private readonly string column;
         private readonly string countryColumn;
@@ -20,7 +21,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.validationColumn = validationColumn;
         }
 
-        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             foreach (var row in rows)
             {

@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using System.Collections.Generic;
 using System.Linq;
 
 
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class CountRows 
+    public class CountRows : AbstractOperation
     {
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
-            var items = rows as IList<Dictionary<string, object>> ?? rows.ToList();
+            var items = rows as IList<DynamicReader> ?? rows.ToList();
             var count = items.Count();
             foreach (var row in items)
             {
@@ -18,5 +20,6 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 
             return items;
         }
+
     }
 }

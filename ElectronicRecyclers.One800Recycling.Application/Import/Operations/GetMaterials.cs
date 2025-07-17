@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
 using NHibernate;
@@ -9,7 +11,7 @@ using JoinType = NHibernate.SqlCommand.JoinType;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class GetMaterials 
+    public class GetMaterials : AbstractOperation
     {
         private readonly ISession session;
 
@@ -40,7 +42,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             row[column+"NetImpact"] = impact.GetNetImpact();
         }
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             var materials = session.CreateCriteria<Material>()
                 .CreateCriteria("compositions", JoinType.LeftOuterJoin)
@@ -51,7 +53,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 
             foreach (var material in materials)
             {                    
-                var row = new Dictionary<string, object>();
+                var row = new DynamicReader();
                 row["Name"] = material.Name;
 
                 var climateEquivalent = material.GetRecyclingClimateChangeImpactEquivalent();

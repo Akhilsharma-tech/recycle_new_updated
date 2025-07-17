@@ -7,12 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectronicRecyclers.One800Recycling.Application.ETLProcess.IOperationETL
+namespace ElectronicRecyclers.One800Recycling.Application.ETLProcess
 {
     public interface IOperationETL : IDisposable
     {
+
         string Name { get; }
-        Task<IEnumerable<DynamicReader>> ExecuteAsync(IEnumerable<DynamicReader> rows);
-        event Action<DynamicReader> OnRowProcessed;
+        bool UseTransaction { get; set; }
+        OperationStatistics Statistics { get; }
+
+        event Action<IOperationETL, DynamicReader>? OnRowProcessed;
+        event Action<IOperationETL>? OnFinishedProcessing;
+
+        void PrepareForExecution(IPipelineExecuter pipelineExecuter);
+        void RaiseRowProcessed(DynamicReader row);
+        void RaiseFinishedProcessing();
+        IEnumerable<Exception> GetAllErrors();
+        IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows);
+        
     }
 }

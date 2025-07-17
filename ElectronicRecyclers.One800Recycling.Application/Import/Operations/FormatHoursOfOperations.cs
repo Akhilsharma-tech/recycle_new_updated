@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -7,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class FormatHoursOfOperations 
+    public class FormatHoursOfOperations :AbstractOperation
     {
         private readonly Dictionary<string, string> militaryTimes = new Dictionary<string, string>
         {
@@ -25,7 +27,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             {"12", "24"}
         }; 
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             foreach (var row in rows)
             {

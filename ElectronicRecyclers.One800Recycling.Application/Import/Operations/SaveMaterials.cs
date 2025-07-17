@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using NHibernate;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
-
-
+using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class SaveMaterials 
+    public class SaveMaterials : AbstractOperation
     {
         private readonly ISession session;
         public SaveMaterials(ISession session)
@@ -27,7 +27,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
                 .ForEach(action);
         }
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             using (session)
             using (var transaction = session.BeginTransaction())

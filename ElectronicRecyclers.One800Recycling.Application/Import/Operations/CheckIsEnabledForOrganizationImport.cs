@@ -1,4 +1,6 @@
 ﻿
+using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +8,7 @@ using System.Web;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class CheckIsEnabledForOrganizationImport 
+    public class CheckIsEnabledForOrganizationImport : AbstractOperation
     {
         private readonly string column;
         private readonly string validationColumn;
@@ -17,7 +19,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.validationColumn = validationColumn;
         }
 
-        public IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string, object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             foreach (var row in rows)
             {

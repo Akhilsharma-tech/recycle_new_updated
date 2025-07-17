@@ -1,89 +1,83 @@
 ﻿using ElectronicRecyclers.One800Recycling.Application.Common;
-using ElectronicRecyclers.One800Recycling.Application.ETLProcess.IOperationETL;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using ElectronicRecyclers.One800Recycling.Application.Import.Operations;
+using ElectronicRecyclers.One800Recycling.Application.Logging;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
 {
-    public abstract class AbstractEtlProcess
+    public abstract class AbstractEtlProcess : EtlProcess
     {
-        private readonly List<IOperationETL> operations = new();
-        private IHubContext<ProgressBarHub> hubContext;
+        private readonly IHubContext<ProgressBarHub> _hubContext;
         private IOperationETL operationWithProgressReporting;
         private const string RowsCountKey = "%rowsCount%";
-        protected IProgress<double> Progress { get; private set; }
 
-        protected AbstractEtlProcess(IHubContext<ProgressBarHub> hubContext)
+        private static void PauseTaskForJustAMomentToLetUserInterfaceToLoad()
         {
-            this.hubContext = hubContext;
+            Thread.Sleep(4000);//It is done for task progress reporting to the ui. -Roman
         }
 
-        public async Task ExecuteAsync(IEnumerable<DynamicReader> input)
+        protected override void Initialize()
         {
-            Initialize();
-            var result = await RunOperationsAsync(input);
-            PostProcessing(result);
-        }
+            PauseTaskForJustAMomentToLetUserInterfaceToLoad();
 
-        protected virtual void Initialize()
-        {
             Progress = new Progress<double>(percent =>
             {
-                hubContext.Clients.All.SendAsync("broadcastProgress", percent);
+                _hubContext.Clients.All.SendAsync("broadcastProgress", percent);
             });
-            Progress.Report(0);
-            Thread.Sleep(1000); // Optional delay
+            Progress.Report(0); 
         }
 
-        private async Task<IEnumerable<DynamicReader>> RunOperationsAsync(IEnumerable<DynamicReader> input)
+        private static double CalculateProgress(long current, int total)
         {
-            var result = input;
-            foreach (var op in GetOperations())
-            {
-                if (op == operationWithProgressReporting)
-                    op.OnRowProcessed += row => ReportProgress(op, row); 
-
-                result = await op.ExecuteAsync(result);
-            }
-            return result;
+            var progress = (current >= total) ? 100.00 : ((double)current / (double)total) * 100;
+            return Math.Round(progress, 2);
         }
 
-        private void ReportProgress(IOperationETL op, Dictionary<string, object> row)
+        private void ReportProgress(IOperationETL op, DynamicReader dictionary)
         {
-            if (!row.TryGetValue(RowsCountKey, out var totalObj) || totalObj is not int totalRows)
-                return;
+            var rowsCount = 0;
+            if (dictionary.ContainsKey(RowsCountKey) && dictionary[RowsCountKey] != null)
+                rowsCount = (int)dictionary[RowsCountKey];
 
-            var current = 1; // Replace with actual tracking logic if needed
-            var progress = Math.Round((double)current / totalRows * 100, 2);
+            var current = op.Statistics.OutputtedRows;
+            var progress = CalculateProgress(current, rowsCount);
+
             Progress.Report(progress);
+            Thread.Sleep(300); //Give time for ui to update progress bar. -Roman
         }
 
-        protected virtual void PostProcessing(IEnumerable<Dictionary<string, object>> result)
+        protected IProgress<double> Progress { get; private set; }
+
+        protected override void PostProcessing()
         {
+            GetAllErrors().ForEach(e =>
+            {
 
+                _hubContext.Clients.All.SendAsync("broadcastError", e.Message);
+                LogManager.GetLogger().Error(e.Message, e);
+            });
         }
 
-       
-        protected void Register(IOperationETL op)
-        {
-            operations.Add(op);
-        }
-
-        
         protected void RegisterWithProgressReporting(IOperationETL op)
         {
             if (operationWithProgressReporting != null)
-                throw new Exception("Only one operation per ETL process allowed for progress reporting");
+                throw new Exception("Only one operation per etl process allowed to have progress reporting capability.");
 
             operationWithProgressReporting = op;
-            Register(op);
-        }
+            operationWithProgressReporting.OnRowProcessed += ReportProgress;
 
-        protected virtual IEnumerable<IOperationETL> GetOperations() => operations;
+            Register(new CountRows());
+            Register(operationWithProgressReporting);
+        }
     }
 
 }

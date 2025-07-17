@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using ElectronicRecyclers.One800Recycling.Application.Import.Records;
+using FileHelpers;
+using NHibernate.Impl;
 
 
 
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class SaveMaterialsToFile 
+    public class SaveMaterialsToFile : AbstractOperation
     {
         private readonly string filePath;
 
@@ -16,9 +20,9 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.filePath = filePath;
         }
 
-        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
-            var engine = FluentFile.For<MaterialEnvironmentalImpactRecord>();
+            var engine = new FileHelperEngine<MaterialEnvironmentalImpactRecord>();
             engine.HeaderText = "Material Name" +
                                 "\tClimate Change Impact Virgin Production Process" +
                                 "\tClimate Change Impact Product Dismantling Process" +
@@ -42,11 +46,14 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
                                 "\tGallon of oil avoided" + 
                                 "\tGallon of water avoided";
 
-            using (var file = engine.To(filePath))
+            using (var file = new StreamWriter(filePath, false, Encoding.UTF8))
             {
                 foreach (var row in rows)
                 {
-                    file.Write(row.ToObject<MaterialEnvironmentalImpactRecord>());
+                    var record = row.ToObject<MaterialEnvironmentalImpactRecord>();
+
+                    string line = engine.WriteString(new[] { record });
+                    file.Write(line);
                 }    
             }
 

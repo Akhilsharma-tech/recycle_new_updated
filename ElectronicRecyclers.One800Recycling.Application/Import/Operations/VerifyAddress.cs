@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using ElectronicRecyclers.One800Recycling.Application.Services;
 using ElectronicRecyclers.One800Recycling.Domain.ValueObjects;
 
 
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class VerifyAddress 
+    public class VerifyAddress : AbstractOperation
     {
-        public  IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             var addresses = new Dictionary<int, Address>();
             var resultRows = new Dictionary<int, DynamicReader>();

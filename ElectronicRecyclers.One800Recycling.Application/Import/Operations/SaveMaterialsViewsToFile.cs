@@ -1,15 +1,16 @@
-﻿using ElectronicRecyclers.One800Recycling.Application.Import.Records;
-
-
-
+﻿using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
+using ElectronicRecyclers.One800Recycling.Application.Import.Records;
+using FileHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class SaveMaterialsViewsToFile 
+    public class SaveMaterialsViewsToFile : AbstractOperation
     {
         private readonly string filePath;
 
@@ -18,12 +19,12 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             this.filePath = filePath;
         }
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
-            var engine = FluentFile.For<MaterialRecord>();
+            var engine = new FileHelperEngine<MaterialRecord>();
             engine.HeaderText = "Material_Id\tName\tDescription\tSearchKeywords\tCategories\tIsActive";
 
-            using (var file = engine.To(filePath))
+            using (var file = new StreamWriter(filePath, false, Encoding.UTF8))
             {
                 foreach (var row in rows)
                 {
@@ -37,7 +38,8 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
                         IsActive = row["IsActive"]?.ToString() ?? "",
                     };
 
-                    file.Write(record);
+                    string line = engine.WriteString(new[] { record });
+                    file.Write(line);
                 }
 
                 yield break;

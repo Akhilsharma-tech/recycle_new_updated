@@ -199,5 +199,35 @@ namespace ElectronicRecyclers.One800Recycling.Domain.Entities
         {
             return GetRecyclingWaterWithdrawalImpactEquivalent(1M);
         }
+        private readonly ICollection<SubMaterials> subMaterials = new Collection<SubMaterials>();
+        public virtual IEnumerable<SubMaterials> GetSubMaterials()
+        {
+            return subMaterials;
+        }
+        public virtual SubMaterials GetSubMaterials(int subId)
+        {
+            return subMaterials.FirstOrDefault(c => c.Id == subId);
+        }
+        public virtual void AddSubMaterial(string Name)
+        {
+            if (!string.IsNullOrWhiteSpace(Name)
+                && subMaterials.All(sm => sm.Name != Name))
+
+                subMaterials.Add(new SubMaterials(this, Name));
+
+
+
+        }
+        public virtual bool RemoveSubMaterials(int id)
+        {
+            return RemoveSubMaterials(GetSubMaterials(id));
+        }
+        public virtual bool RemoveSubMaterials(SubMaterials subMaterialsremove)
+        {
+            if (subMaterials == null)
+                return false;
+
+            return subMaterials.Contains(subMaterialsremove) && subMaterials.Remove(subMaterialsremove);
+        }
     }
 }

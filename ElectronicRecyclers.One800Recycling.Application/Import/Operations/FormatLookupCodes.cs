@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-
+using ElectronicRecyclers.One800Recycling.Application.Common;
+using ElectronicRecyclers.One800Recycling.Application.ETLProcess;
 using ElectronicRecyclers.One800Recycling.Application.Logging;
 
 
 
 namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
 {
-    public class FormatLookupCodes 
+    public class FormatLookupCodes : AbstractOperation
     {
         private static string CleanString(string str)
         {
@@ -23,7 +24,7 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Operations
             }
         }
 
-        public  IEnumerable<Dictionary<string,object>> Execute(IEnumerable<Dictionary<string,object>> rows)
+        public override IEnumerable<DynamicReader> Execute(IEnumerable<DynamicReader> rows)
         {
             foreach (var row in rows)
             {

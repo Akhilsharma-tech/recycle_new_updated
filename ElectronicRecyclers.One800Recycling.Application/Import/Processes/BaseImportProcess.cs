@@ -1,6 +1,7 @@
 ﻿using ElectronicRecyclers.One800Recycling.Domain.Common;
 using ElectronicRecyclers.One800Recycling.Domain.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.IO;
 using System.Web;
@@ -15,9 +16,12 @@ namespace ElectronicRecyclers.One800Recycling.Application.Import.Processes
 
         protected Stream FileStream { get; set; }
 
-        protected BaseImportProcess() { }
 
-        protected BaseImportProcess(IFormFile file)
+        protected BaseImportProcess() 
+        {
+        }
+
+        protected BaseImportProcess(IFormFile file)   
         {
             FileName = file.FileName;
             FileStream = file.OpenReadStream();

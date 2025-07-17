@@ -4,53 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectronicRecyclers.One800Recycling.Application.ETLProcess
+namespace ElectronicRecyclers.One800Recycling.Application
 {
-    //public class OperationStatistics
-    //{
-    //    public OperationStatistics();
+    public class OperationStatistics
+    {
+        private long outputtedRows;
+        public long OutputtedRows => outputtedRows;
+        public int RowsProcessed { get; private set; }
+        public DateTime? StartTime { get; private set; }
+        public DateTime? EndTime { get; private set; }
 
-    //    //
-    //    // Summary:
-    //    //     Gets number of the outputted rows.
-    //    //
-    //    // Value:
-    //    //     The processed rows.
-    //    public long OutputtedRows { get; }
-    //    //
-    //    // Summary:
-    //    //     Gets the duration this operation has executed
-    //    //
-    //    // Value:
-    //    //     The duration.
-    //    public TimeSpan Duration { get; }
-
-    //    //
-    //    // Summary:
-    //    //     Adds to the count of the output rows.
-    //    //
-    //    // Parameters:
-    //    //   rowProcessed:
-    //    //     The row processed.
-    //    public void AddOutputRows(long rowProcessed);
-    //    //
-    //    // Summary:
-    //    //     Mark the end time
-    //    public void MarkFinished();
-    //    //
-    //    // Summary:
-    //    //     Marks a processed row.
-    //    public void MarkRowProcessed();
-    //    //
-    //    // Summary:
-    //    //     Mark the start time
-    //    public void MarkStarted();
-    //    //
-    //    // Summary:
-    //    //     Returns a System.String that represents the current System.Object.
-    //    //
-    //    // Returns:
-    //    //     A System.String that represents the current System.Object.
-    //    public override string ToString();
-    //}
+        public void MarkStarted() => StartTime = DateTime.UtcNow;
+        public void MarkRowProcessed() => RowsProcessed++;
+        public void MarkFinished() => EndTime = DateTime.UtcNow;
+    }
 }
